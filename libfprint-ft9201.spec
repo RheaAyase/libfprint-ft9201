@@ -12,8 +12,9 @@ License:        MIT & FocalSystems
 URL:            https://github.com/%{vendor}/%{srcname}-%{hwmodel}
 
 Source0:        https://kojipkgs.fedoraproject.org/packages/%{srcname}/%{version}/%{release}/%{_arch}/%{srcname}-%{version}-%{release}.%{_arch}.rpm
-Source1:        %{url}/raw/main/%{srcname}-2-tod.so.1
-Source2:        %{url}/raw/main/%{rulename}
+Source1:        %{url}/raw/main/%{soname}.0.0
+Source2:        %{url}/raw/main/%{srcname}-2-tod.so.1
+Source3:        %{url}/raw/main/%{rulename}
 
 BuildRequires:  cpio rpm
 Provides:       %{soname}()(%{__isa_bits}bit)
@@ -28,7 +29,8 @@ rm -rf %{buildroot}
 %install
 rpm2cpio %{SOURCE0} | cpio -idum --directory %{buildroot}
 install -Dm755 %{SOURCE1} %{buildroot}/%{_libdir}/%{soname}.0.0
-install -Dm644 %{SOURCE2} %{buildroot}/%{_prefix}/lib/udev/rules.d/%{rulename}
+install -Dm755 %{SOURCE2} %{buildroot}/%{_libdir}/%{srcname}-2-tod.so.1
+install -Dm644 %{SOURCE3} %{buildroot}/%{_prefix}/lib/udev/rules.d/%{rulename}
 
 %files
 %{_datadir}/licenses/%{srcname}
